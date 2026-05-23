@@ -1,26 +1,275 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --animate-gradient-slow: gradient 15s ease infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-ring: pulse-ring 3s ease-in-out infinite;
+  --animate-float-3d: float-3d 8s ease-in-out infinite;
+  --animate-float-3d-delayed: float-3d-delayed 10s ease-in-out infinite;
+  --animate-marquee: marquee 30s linear infinite;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%      { transform: translateY(-10px); }
+  }
+  @keyframes float-3d {
+    0%, 100% { transform: translateY(0px) rotateX(60deg) rotateY(-12deg) rotateZ(12deg); }
+    50%      { transform: translateY(-18px) rotateX(57deg) rotateY(-15deg) rotateZ(15deg); }
+  }
+  @keyframes float-3d-delayed {
+    0%, 100% { transform: translateY(0px) rotateX(60deg) rotateY(12deg) rotateZ(-12deg); }
+    50%      { transform: translateY(-22px) rotateX(63deg) rotateY(15deg) rotateZ(-15deg); }
+  }
+  @keyframes pulse-ring {
+    0%   { transform: scale(0.9); opacity: 0.5; }
+    50%  { transform: scale(1.05); opacity: 0.2; }
+    100% { transform: scale(0.9); opacity: 0.5; }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+:root {
+  --bg-gradient: linear-gradient(135deg, #080a10 0%, #111522 50%, #090c13 100%);
+  
+  /* Solid charcoal-slate dark glass by default so we cannot see through it */
+  --card: rgba(20, 24, 33, 0.99);
+  --card-hover: rgba(26, 31, 42, 0.995);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.16);
+  
+  --accent: #3b82f6;
+  --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
 }
+
+/* Optional Light Mode overrides for system-level light preferences */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+    --card: rgba(255, 255, 255, 0.98);
+    --card-hover: rgba(255, 255, 255, 0.995);
+    --border: rgba(255, 255, 255, 0.5);
+    --border-hover: rgba(255, 255, 255, 0.85);
+    --text-primary: #1e1b4b;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+  }
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: var(--bg-gradient);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ─── Premium Frosted Glassmorphism & 3D Cards ─── */
+.card {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+
+  border-radius: 2.2rem;
+  backdrop-filter: blur(35px) saturate(130%);
+  -webkit-backdrop-filter: blur(35px) saturate(130%);
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 0.15),
+    0 15px 35px 0 rgba(30, 27, 75, 0.08);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  position: relative;
+  transform: translateY(0);
+}
+
+/* 3D Hover elevation with strong border reflection and white bloom */
+.card:hover {
+  transform: translateY(-6px) scale(1.005);
+
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 0.25),
+    0 25px 50px 0 rgba(30, 27, 75, 0.15),
+    0 0 30px 4px rgba(255, 255, 255, 0.25);
+}
+
+.card-clickable {
+  cursor: pointer;
+}
+
+.card-clickable:hover {
+  transform: translateY(-6px) scale(1.005);
+  background: var(--card-hover);
+  border-color: var(--border-hover);
+
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.3),
+    0 30px 55px 0 rgba(30, 27, 75, 0.18),
+    0 0 35px 5px rgba(255, 255, 255, 0.3);
+}
+
+/* ─── Neumorphic Hybrid Inner Card ─── */
+.inner-card {
+  border-radius: 1.6rem;
+
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.inner-card:hover {
+
+
+  box-shadow: 
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.08),
+    0 15px 35px -5px rgba(0, 0, 0, 0.2);
+}
+
+/* Light Mode inner card settings */
+@media (prefers-color-scheme: light) {
+  .inner-card {
+    background: rgba(255, 255, 255, 0.98);
+    border-color: rgba(255, 255, 255, 0.75);
+    box-shadow: 
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.9),
+      0 10px 25px -5px rgba(30, 27, 75, 0.05);
+  }
+  .inner-card:hover {
+    background: rgba(255, 255, 255, 0.995);
+    border-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.99),
+      0 15px 35px -5px rgba(30, 27, 75, 0.08);
+  }
+}
+
+/* ─── Accent Text Gradient ─── */
+.accent {
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+/* ─── Pill tags ─── */
+.skill-pill {
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(30, 35, 47, 0.85);
+  color: var(--text-secondary);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  cursor: default;
+}
+
+.skill-pill:hover {
+  background: var(--accent-gradient);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(59, 130, 246, 0.22);
+  transform: translateY(-1.5px);
+}
+
+@media (prefers-color-scheme: light) {
+  .skill-pill {
+    border-color: rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--text-secondary);
+    box-shadow: 0 4px 10px rgba(30, 27, 75, 0.03);
+  }
+}
+
+/* ─── Status dot ─── */
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 10px 4px rgba(16, 185, 129, 0.4);
+}
+
+/* ─── Animations ─── */
+.fade-in { animation: fadeIn 0.4s ease-out forwards; }
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-pulse-ring { animation: pulse-ring 3s ease-in-out infinite; }
+.animate-marquee { animation: var(--animate-marquee); }
+.pause-on-hover:hover .animate-marquee { animation-play-state: paused; }
+
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
+
+/* Ensure custom styling for scrollable divs with scrollbar-thin class */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ─── Accessible Contrast Typography inside Bento Cards ─── */
+.inner-card .text-slate-850,
+.inner-card .text-slate-800 {
+  color: var(--text-primary);
+}
+
+.inner-card .text-slate-650,
+.inner-card .text-slate-600 {
+  color: var(--text-secondary);
+}
+
+.inner-card .text-slate-500,
+.inner-card .text-slate-400 {
+  color: var(--text-muted);
+}
+
+/* Retain high-contrast dark text inside absolute white buttons (ContactCard.tsx links) */
+.inner-card .bg-white .text-slate-600,
+.inner-card a.bg-white span {
+  color: #475569 !important;
+}
+
+.inner-card .bg-white:hover .text-slate-600,
+.inner-card a.bg-white:hover span {
+  color: #0f172a !important;
+}
+
+.inner-card .bg-white .text-slate-400,
+.inner-card .bg-white svg {
+  color: #64748b !important;
+}
+
+.inner-card .bg-white:hover svg {
+  color: #2563eb !important;
+}
+
