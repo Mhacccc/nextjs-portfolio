@@ -7,7 +7,7 @@ export const PROJECTS: ProjectCardData[] = [
     title: "FinCore V3",
     subtitle: "Fintech Core Architecture",
     category: "Fintech",
-    image: "https://images.unsplash.com/photo-1526628953301-3cd12a98f2fc?auto=format&fit=crop&q=80&w=800",
+    image: "/fincore.png",
     description: "High-performance fintech core banking architecture with real-time transaction processing.",
     longDescription: "FinCore V3 is an enterprise-grade core banking system built to handle millions of concurrent transactions with sub-millisecond latency. It powers multi-currency ledgers, regulatory reporting, and fraud detection pipelines for Tier-1 financial institutions.",
     tags: ["TypeScript", "Node.js", "PostgreSQL", "Kafka", "Docker", "AWS"],

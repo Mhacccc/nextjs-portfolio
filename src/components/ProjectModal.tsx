@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { X, ExternalLink, ShieldCheck, Cpu, Layers } from "lucide-react";
 
 export interface ProjectData {
@@ -22,79 +22,141 @@ interface ProjectModalProps {
 }
 
 export default function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
-  // Prevent background scrolling when modal is open
+  const [isVisible, setIsVisible] = useState(false);
+  const [isAnimatingOut, setIsAnimatingOut] = useState(false);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Handle open/close with animation states
+  useEffect(() => {
+    if (isOpen) {
+      setIsAnimatingOut(false);
+      // Small tick to let the DOM paint before triggering animation
+      requestAnimationFrame(() => setIsVisible(true));
+    } else {
+      setIsAnimatingOut(true);
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+        setIsAnimatingOut(false);
+      }, 220);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
+
+  // Lock background scroll
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      // Focus the close button for keyboard accessibility
+      setTimeout(() => closeButtonRef.current?.focus(), 50);
     } else {
       document.body.style.overflow = "";
     }
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
 
-  if (!isOpen || !project) return null;
+  // ESC key close
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) onClose();
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [isOpen, onClose]);
+
+  if (!isVisible && !isOpen) return null;
+  if (!project) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${project.title} project details`}
+    >
       {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-indigo-950/30 backdrop-blur-md transition-opacity duration-300"
+      <div
+        className={`absolute inset-0 bg-slate-950/60 backdrop-blur-md transition-opacity duration-300 ${
+          isAnimatingOut ? "opacity-0" : "opacity-100"
+        }`}
         onClick={onClose}
+        aria-hidden="true"
       />
 
       {/* Modal Container */}
-      <div className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-[2.5rem] bg-white/96 border border-white/50 backdrop-blur-3xl shadow-2xl p-6 sm:p-10 text-slate-700 animate-[fadeIn_0.3s_ease-out] scrollbar-thin">
-        {/* Header Control */}
-        <button 
+      <div
+        className={`relative w-full max-w-4xl max-h-[88vh] overflow-y-auto rounded-4xl border scrollbar-thin ${
+          isAnimatingOut ? "modal-exit" : "modal-enter"
+        }`}
+        style={{
+          background: "rgba(10, 13, 22, 0.93)",
+          borderColor: "rgba(255,255,255,0.10)",
+          backdropFilter: "blur(40px) saturate(180%)",
+          WebkitBackdropFilter: "blur(40px) saturate(180%)",
+          boxShadow: "0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06) inset",
+        }}
+      >
+        {/* Close Button */}
+        <button
+          ref={closeButtonRef}
           onClick={onClose}
-          className="absolute top-6 right-6 p-2 rounded-full bg-white/70 border border-slate-200 text-slate-500 hover:text-slate-800 hover:bg-white transition-all cursor-pointer z-10 shadow-sm"
+          className="absolute top-5 right-5 z-20 p-2.5 rounded-full bg-white/8 border border-white/12 text-slate-400 hover:text-white hover:bg-white/14 transition-all duration-200 cursor-pointer shadow-sm active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+          aria-label="Close modal"
         >
-          <X className="w-5 h-5" />
+          <X className="w-4.5 h-4.5" />
         </button>
 
-        {/* Hero Section */}
-        <div className="relative h-64 sm:h-80 w-full rounded-3xl overflow-hidden mb-8 border border-white/50 shadow-md">
-          <img 
-            src={project.image} 
-            alt={project.title} 
-            className="w-full h-full object-cover"
+        {/* Hero Image Section */}
+        <div className="relative h-56 sm:h-72 w-full overflow-hidden rounded-t-4xl">
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover opacity-75"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/20 to-transparent" />
-          <div className="absolute bottom-6 left-6 sm:left-10 z-10">
-            <span className="text-xs font-bold tracking-[0.2em] uppercase text-sky-300">
+          {/* Dark gradient overlay */}
+          <div className="absolute inset-0 bg-linear-to-t from-[rgba(10,13,22,1)] via-[rgba(10,13,22,0.4)] to-transparent" />
+          {/* Category + Title over image */}
+          <div className="absolute bottom-6 left-6 sm:left-8 z-10">
+            <span
+              className="text-[10px] font-bold tracking-[0.25em] uppercase"
+              style={{ fontFamily: "var(--font-mono)", color: "var(--accent-cyan)" }}
+            >
               {project.category}
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mt-1">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mt-1.5 tracking-tight">
               {project.title}
             </h2>
           </div>
         </div>
 
-        {/* Content Bento */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Main Description */}
-          <div className="md:col-span-2 space-y-6">
-            <div className="p-6 rounded-2xl bg-white/90 border border-white/80 shadow-sm">
-              <h3 className="text-lg font-bold text-slate-850 mb-3 flex items-center gap-2">
-                <Layers className="w-4.5 h-4.5 text-blue-600" />
+        {/* Content Grid */}
+        <div className="p-6 sm:p-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Left — Overview + Features */}
+          <div className="md:col-span-2 space-y-5">
+            {/* Overview */}
+            <div className="p-5 rounded-2xl border border-white/8 bg-white/4">
+              <h3 className="text-sm font-bold text-(--text-primary) mb-3 flex items-center gap-2 uppercase tracking-wider">
+                <Layers className="w-4 h-4 text-blue-400" />
                 Overview
               </h3>
-              <p className="text-slate-600 leading-relaxed font-semibold text-sm sm:text-base">
+              <p className="text-(--text-secondary) leading-relaxed text-sm font-medium">
                 {project.longDescription}
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white/90 border border-white/80 shadow-sm">
-              <h3 className="text-lg font-bold text-slate-850 mb-3 flex items-center gap-2">
-                <ShieldCheck className="w-4.5 h-4.5 text-emerald-600" />
+            {/* Key Highlights */}
+            <div className="p-5 rounded-2xl border border-white/8 bg-white/4">
+              <h3 className="text-sm font-bold text-(--text-primary) mb-4 flex items-center gap-2 uppercase tracking-wider">
+                <ShieldCheck className="w-4 h-4 text-emerald-400" />
                 Key Highlights
               </h3>
               <ul className="space-y-3">
                 {project.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-sm text-slate-600 font-semibold">
-                    <span className="w-2 h-2 rounded-full bg-blue-500 mt-1.5 shrink-0 shadow-sm shadow-blue-500/20" />
+                  <li
+                    key={idx}
+                    className="flex items-start gap-3 text-sm text-(--text-secondary) font-medium stagger-item"
+                    style={{ animationDelay: `${idx * 60}ms` }}
+                  >
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0 shadow-sm shadow-blue-500/40" />
                     <span>{feature}</span>
                   </li>
                 ))}
@@ -102,19 +164,22 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
             </div>
           </div>
 
-          {/* Stats & Technologies Sidebar */}
-          <div className="space-y-6">
-            {/* Tech Badges */}
-            <div className="p-6 rounded-2xl bg-white/90 border border-white/80 shadow-sm">
-              <h3 className="text-sm font-bold text-slate-850 uppercase tracking-wider mb-4 flex items-center gap-2">
-                <Cpu className="w-4 h-4 text-blue-600" />
+          {/* Right — Stack, Stats, CTA */}
+          <div className="space-y-5">
+            {/* Tech Stack */}
+            <div className="p-5 rounded-2xl border border-white/8 bg-white/4">
+              <h3
+                className="text-[10px] font-bold uppercase tracking-widest text-(--text-muted) mb-4 flex items-center gap-2"
+                style={{ fontFamily: "var(--font-mono)" }}
+              >
+                <Cpu className="w-3.5 h-3.5 text-blue-400" />
                 Stack
               </h3>
               <div className="flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
-                  <span 
-                    key={tag} 
-                    className="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-600 shadow-sm"
+                  <span
+                    key={tag}
+                    className="px-3 py-1.5 rounded-xl bg-white/6 border border-white/10 text-xs font-semibold text-(--text-secondary)"
                   >
                     {tag}
                   </span>
@@ -122,24 +187,37 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
               </div>
             </div>
 
-            {/* Performance Stats */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* Stats */}
+            <div className="grid grid-cols-2 gap-3">
               {project.stats.map((stat, idx) => (
-                <div key={idx} className="p-4 rounded-2xl bg-white/90 border border-white/80 text-center shadow-sm">
-                  <p className="text-2xl font-extrabold text-blue-600">{stat.value}</p>
-                  <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1">{stat.label}</p>
+                <div
+                  key={idx}
+                  className="p-4 rounded-2xl border border-white/8 bg-white/4 text-center stagger-item"
+                  style={{ animationDelay: `${idx * 80 + 100}ms` }}
+                >
+                  <p className="text-2xl font-extrabold accent">{stat.value}</p>
+                  <p
+                    className="text-[9px] text-(--text-muted) uppercase tracking-widest mt-1"
+                    style={{ fontFamily: "var(--font-mono)" }}
+                  >
+                    {stat.label}
+                  </p>
                 </div>
               ))}
             </div>
 
-            {/* CTA Button */}
-            <a 
-              href="#" 
+            {/* CTA */}
+            <a
+              href="#"
               onClick={(e) => e.preventDefault()}
-              className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 text-white font-bold text-sm border border-white/20 transition-all duration-300 flex items-center justify-center gap-2 shadow-md shadow-cyan-500/10 cursor-pointer"
+              className="w-full py-3.5 rounded-2xl text-white font-bold text-sm border border-white/15 transition-all duration-250 flex items-center justify-center gap-2 shadow-lg cursor-pointer hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+              style={{
+                background: "var(--accent-gradient)",
+                boxShadow: "0 8px 24px rgba(34, 211, 238, 0.25)",
+              }}
             >
               <span>Explore Demo</span>
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="w-3.5 h-3.5" />
             </a>
           </div>
         </div>

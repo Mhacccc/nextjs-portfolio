@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { X, Send, CheckCircle2, Loader2, Mail } from "lucide-react";
 
 interface ContactModalProps {
@@ -14,36 +14,53 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
-  // Prevent background scrolling when modal is open
+  const [isVisible, setIsVisible] = useState(false);
+  const [isAnimatingOut, setIsAnimatingOut] = useState(false);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const firstInputRef = useRef<HTMLInputElement>(null);
+
+  // Handle open/close animations
+  useEffect(() => {
+    if (isOpen) {
+      setIsAnimatingOut(false);
+      requestAnimationFrame(() => setIsVisible(true));
+    } else {
+      setIsAnimatingOut(true);
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+        setIsAnimatingOut(false);
+      }, 220);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
+
+  // Lock scroll + focus first input
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      setTimeout(() => firstInputRef.current?.focus(), 80);
     } else {
       document.body.style.overflow = "";
     }
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
 
-  // Handle escape key
+  // ESC key close
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape" && isOpen && status !== "sending") onClose();
     };
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
-  }, [onClose]);
+  }, [isOpen, onClose, status]);
 
-  if (!isOpen) return null;
+  if (!isVisible && !isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !message) return;
-
     setStatus("sending");
-
-    // Simulate sending message API call
+    // Simulate API call
     setTimeout(() => {
       setStatus("success");
       setName("");
@@ -57,111 +74,182 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     onClose();
   };
 
+  const inputClass = `
+    w-full px-4 py-3.5 rounded-xl text-sm text-(--text-primary)
+    placeholder-(--text-muted) bg-white/5 border border-white/10
+    focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500/50
+    focus:bg-white/8 transition-all duration-200 disabled:opacity-50
+  `.trim();
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Contact form"
+    >
       {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-slate-950/70 backdrop-blur-md transition-opacity duration-300"
+      <div
+        className={`absolute inset-0 bg-slate-950/65 backdrop-blur-md transition-opacity duration-300 ${
+          isAnimatingOut ? "opacity-0" : "opacity-100"
+        }`}
         onClick={status === "sending" ? undefined : onClose}
+        aria-hidden="true"
       />
 
       {/* Modal Card */}
-      <div className="relative w-full max-w-lg rounded-[2.5rem] bg-slate-900/60 border border-white/10 backdrop-blur-2xl shadow-2xl p-8 text-slate-200 animate-[fadeIn_0.3s_ease-out]">
-        
+      <div
+        className={`relative w-full max-w-md rounded-4xl border p-7 sm:p-8 ${
+          isAnimatingOut ? "modal-exit" : "modal-enter"
+        }`}
+        style={{
+          background: "rgba(10, 13, 22, 0.93)",
+          borderColor: "rgba(255,255,255,0.10)",
+          backdropFilter: "blur(40px) saturate(180%)",
+          WebkitBackdropFilter: "blur(40px) saturate(180%)",
+          boxShadow: "0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05) inset",
+          color: "var(--text-primary)",
+        }}
+      >
         {/* Close Button */}
         {status !== "sending" && (
-          <button 
+          <button
+            ref={closeButtonRef}
             onClick={onClose}
-            className="absolute top-6 right-6 p-2 rounded-full bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
+            className="absolute top-5 right-5 p-2.5 rounded-full bg-white/6 border border-white/10 text-(--text-muted) hover:text-(--text-primary) hover:bg-white/12 transition-all duration-200 cursor-pointer active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+            aria-label="Close contact form"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4.5 h-4.5" />
           </button>
         )}
 
+        {/* Success State */}
         {status === "success" ? (
-          <div className="py-8 text-center flex flex-col items-center space-y-4">
-            <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-2">
-              <CheckCircle2 className="w-8 h-8 animate-[scaleIn_0.4s_cubic-bezier(0.16,1,0.3,1)]" />
+          <div className="py-6 text-center flex flex-col items-center gap-4">
+            <div className="w-16 h-16 rounded-full flex items-center justify-center scale-pop"
+              style={{
+                background: "rgba(16,185,129,0.12)",
+                border: "1.5px solid rgba(16,185,129,0.25)",
+              }}
+            >
+              <CheckCircle2 className="w-8 h-8 text-emerald-400" />
             </div>
-            <h3 className="text-2xl font-semibold text-white">Message Transmitted</h3>
-            <p className="text-slate-400 font-light max-w-sm">
-              Thank you for reaching out! Alex will respond to your collaboration request within 24 hours.
-            </p>
-            <button 
+            <div className="space-y-1.5">
+              <h3 className="text-xl font-bold text-(--text-primary)">Message Transmitted</h3>
+              <p className="text-sm text-(--text-muted) max-w-[280px] leading-relaxed">
+                Thank you for reaching out! Alex will respond within 24 hours.
+              </p>
+            </div>
+            <button
               onClick={handleReset}
-              className="mt-6 px-8 py-3 rounded-xl bg-white text-black font-semibold text-sm hover:bg-slate-200 transition-colors cursor-pointer"
+              className="mt-2 px-7 py-3 rounded-xl font-bold text-sm text-white border border-white/15 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+              style={{
+                background: "var(--accent-gradient)",
+                boxShadow: "0 4px 14px rgba(34, 211, 238, 0.25)",
+              }}
             >
               Done
             </button>
           </div>
         ) : (
           <div className="space-y-6">
+            {/* Header */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
-                <Mail className="w-5 h-5" />
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                style={{
+                  background: "rgba(99,102,241,0.12)",
+                  border: "1.5px solid rgba(99,102,241,0.25)",
+                }}
+              >
+                <Mail className="w-5 h-5 text-indigo-400" />
               </div>
               <div>
-                <h3 className="text-xl font-medium text-white">Direct Transmission</h3>
-                <p className="text-xs text-slate-400">Collaborations, roles, or general inquires</p>
+                <h3 className="text-lg font-bold text-(--text-primary)">Direct Transmission</h3>
+                <p className="text-xs text-(--text-muted)">Collaborations, roles, or inquiries</p>
               </div>
             </div>
 
+            {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="name" className="block text-xs uppercase tracking-wider text-slate-400 mb-2">Name</label>
-                <input 
-                  id="name"
-                  type="text" 
+                <label
+                  htmlFor="contact-name"
+                  className="block text-[10px] uppercase tracking-widest text-(--text-muted) mb-2 font-semibold"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  Name
+                </label>
+                <input
+                  id="contact-name"
+                  ref={firstInputRef}
+                  type="text"
                   required
                   disabled={status === "sending"}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Jean Doe"
-                  className="w-full px-4 py-3.5 rounded-xl bg-white/5 border border-white/5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-purple-500/50 focus:bg-white/10 transition-all"
+                  className={inputClass}
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-xs uppercase tracking-wider text-slate-400 mb-2">Email Address</label>
-                <input 
-                  id="email"
-                  type="email" 
+                <label
+                  htmlFor="contact-email"
+                  className="block text-[10px] uppercase tracking-widest text-(--text-muted) mb-2 font-semibold"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  Email Address
+                </label>
+                <input
+                  id="contact-email"
+                  type="email"
                   required
                   disabled={status === "sending"}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="e.g. jean@example.com"
-                  className="w-full px-4 py-3.5 rounded-xl bg-white/5 border border-white/5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-purple-500/50 focus:bg-white/10 transition-all"
+                  className={inputClass}
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-xs uppercase tracking-wider text-slate-400 mb-2">Message</label>
-                <textarea 
-                  id="message"
+                <label
+                  htmlFor="contact-message"
+                  className="block text-[10px] uppercase tracking-widest text-(--text-muted) mb-2 font-semibold"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  Message
+                </label>
+                <textarea
+                  id="contact-message"
                   required
                   rows={4}
                   disabled={status === "sending"}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Tell me about your project..."
-                  className="w-full px-4 py-3.5 rounded-xl bg-white/5 border border-white/5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-purple-500/50 focus:bg-white/10 transition-all resize-none"
+                  className={`${inputClass} resize-none`}
                 />
               </div>
 
-              <button 
+              <button
                 type="submit"
                 disabled={status === "sending" || !name || !email || !message}
-                className="w-full py-4 mt-2 rounded-xl bg-white text-black font-semibold text-sm hover:bg-slate-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3.5 mt-1 rounded-xl font-bold text-sm text-white border border-white/15 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                style={{
+                  background: "var(--accent-gradient)",
+                  boxShadow: status === "sending" ? "none" : "0 6px 20px rgba(34, 211, 238, 0.2)",
+                }}
               >
                 {status === "sending" ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin text-black" />
+                    <Loader2 className="w-4 h-4 animate-spin" />
                     <span>Transmitting...</span>
                   </>
                 ) : (
                   <>
-                    <Send className="w-4 h-4 text-black" />
+                    <Send className="w-4 h-4" />
                     <span>Send Message</span>
                   </>
                 )}

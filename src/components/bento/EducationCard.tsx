@@ -15,15 +15,21 @@ export function EducationCard({ onClick }: EducationCardProps) {
     >
       <div className="inner-card flex items-center justify-between px-6 py-4.5 group h-full">
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-cyan-400 to-blue-500 border border-white/20 flex items-center justify-center shrink-0 shadow-md shadow-cyan-500/10">
+          <div
+            className="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 shadow-md"
+            style={{
+              background: "var(--accent-gradient)",
+              boxShadow: "0 4px 12px rgba(34, 211, 238, 0.2)",
+            }}
+          >
             <GraduationCap className="w-4.5 h-4.5 text-white" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-slate-800">Education</h3>
-            <p className="text-[11px] text-slate-500 mt-0.5 font-semibold">B.S. Computer Science · PUP Manila</p>
+            <h3 className="text-sm font-bold text-(--text-primary)">Education</h3>
+            <p className="text-[11px] text-(--text-muted) mt-0.5 font-medium" style={{ fontFamily: "var(--font-mono)" }}>B.S. Computer Science · PUP Manila</p>
           </div>
         </div>
-        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all duration-300" />
+        <ChevronRight className="w-4 h-4 text-(--text-muted) group-hover:text-blue-400 group-hover:translate-x-0.5 transition-all duration-200" />
       </div>
     </article>
   );

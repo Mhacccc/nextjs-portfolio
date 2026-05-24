@@ -18,7 +18,7 @@ export function TechStacksCard({ onViewAll }: TechStacksCardProps) {
           <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-linear-to-r from-cyan-500 to-blue-500 border border-white/20 text-white shadow-md shadow-cyan-500/10">
             <Code2 className="w-4 h-4" />
             <span className="text-[10px] font-bold uppercase tracking-[0.15em] select-none">
-              Skills
+              Tech Stack
             </span>
           </div>
           <div className="w-px h-5 bg-slate-200/20" />
@@ -27,8 +27,8 @@ export function TechStacksCard({ onViewAll }: TechStacksCardProps) {
         {/* Middle Side: Marquee Animation */}
         <div className="overflow-hidden relative flex-1 h-full flex items-center min-w-0 pause-on-hover">
           {/* Subtle gradient fades at the edges */}
-          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[var(--card)] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[var(--card)] to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-16 bg-linear-to-r from-(--card) to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 bg-linear-to-l from-(--card) to-transparent z-10 pointer-events-none" />
 
           {/* Marquee Track */}
           <div className="flex gap-4 animate-marquee w-max">

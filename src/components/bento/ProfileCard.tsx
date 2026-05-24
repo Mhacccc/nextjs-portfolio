@@ -10,49 +10,59 @@ export function ProfileCard() {
         {/* Top: avatar + name + status */}
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between gap-6">
-            <div className="relative">
-              <div className="w-40 h-40 rounded-2xl overflow-hidden p-0.5 shrink-0 shadow-sm">
+            {/* Avatar with hover effect */}
+            <div className="relative shrink-0">
+              <div className="w-40 h-40 rounded-2xl overflow-hidden p-0.5 shadow-sm">
                 <img
                   src="/avatar.jpg"
                   alt="Mark Louie O. Balaba"
-                  className="w-full h-full object-cover rounded-[14px] transition-all duration-500 cursor-pointer"
+                  className="w-full h-full object-cover rounded-[14px] transition-all duration-500 cursor-pointer grayscale-[0.12] hover:grayscale-0 hover:scale-[1.03]"
                 />
               </div>
+              {/* Subtle glow behind avatar */}
+              <div
+                className="absolute -inset-1 rounded-2xl -z-10 opacity-30 blur-lg"
+                style={{ background: "var(--accent-gradient)" }}
+              />
             </div>
+
             <div className="flex flex-col gap-3 flex-1 pt-4">
               <div>
-                <h1 className="text-[28px] font-bold leading-tight text-slate-800 tracking-tight">
+                <h1 className="text-[28px] font-bold leading-tight text-(--text-primary) tracking-tight">
                   Mark Louie <span className="accent">Balaba</span>
                 </h1>
-                <p className="text-xs text-center uppercase tracking-[0.15em] text-slate-500 mt-1 font-bold">
+                <p
+                  className="text-[10px] uppercase tracking-[0.18em] text-(--text-muted) mt-1.5 font-bold"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
                   Full-Stack Developer
                 </p>
               </div>
 
-              {/* Action and Availability */}
-              <div className="flex flex-col justify-center items-center gap-2 mt-1 w-full max-w-full">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50/50 dark:bg-white/5 border border-slate-150/50 dark:border-white/5 text-[9px] uppercase tracking-wider text-slate-500 font-bold justify-center">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-sm shadow-emerald-500/30" />
-                  <span>Available</span>
-                </div>
+              {/* Availability beacon */}
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-[9px] uppercase tracking-wider text-(--text-muted) font-bold w-fit">
+                {/* Beacon: pulsing ring + solid dot */}
+                <span className="relative flex w-2 h-2">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 animate-ping" />
+                  <span className="relative inline-flex rounded-full w-2 h-2 bg-emerald-500 shadow-sm shadow-emerald-500/50" />
+                </span>
+                <span>Available</span>
               </div>
             </div>
           </div>
 
           {/* Bio */}
-
-          <p className="text-xs text-slate-600 leading-[1.7] max-w-full text-justify font-medium">
-            Full-stack developer specializing in backend architecture, scalable systems, and efficient application design. 
-            Focused on building high-performance solutions through clean engineering practices, thoughtful decision-making, 
-            and AI-enhanced workflows.          
+          <p className="text-xs text-(--text-secondary) leading-[1.75] max-w-full text-justify font-medium">
+            Full-stack developer specializing in backend architecture, scalable systems, and efficient
+            application design. Focused on building high-performance solutions through clean engineering
+            practices, thoughtful decision-making, and AI-enhanced workflows.
           </p>
-  
         </div>
 
-        {/* Bottom: location */}
-        <div className="flex items-center justify-between gap-2 text-slate-500 text-xs font-semibold mt-4">
-          <div className="flex gap-2">
-            <MapPin className="w-3.5 h-3.5 text-cyan-400" />
+        {/* Bottom: location + download CV */}
+        <div className="flex items-center justify-between gap-2 text-(--text-muted) text-xs font-semibold mt-4">
+          <div className="flex items-center gap-2">
+            <MapPin className="w-3.5 h-3.5 text-(--accent-cyan)" />
             <span>Manila, Philippines</span>
           </div>
           <a
@@ -61,13 +71,16 @@ export function ProfileCard() {
               e.preventDefault();
               alert("CV download triggered!");
             }}
-            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-linear-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 text-white font-bold text-[11px] shadow-md shadow-cyan-500/10 transition-all duration-300 cursor-pointer group"
+            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-white font-bold text-[11px] shadow-md transition-all duration-250 cursor-pointer group hover:scale-[1.03] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+            style={{
+              background: "var(--accent-gradient)",
+              boxShadow: "0 4px 14px rgba(34, 211, 238, 0.2)",
+            }}
           >
             <Download className="w-3.5 h-3.5 text-white" />
             <span>Download CV</span>
           </a>
         </div>
-
       </div>
     </section>
   );

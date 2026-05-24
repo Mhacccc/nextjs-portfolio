@@ -27,21 +27,41 @@ export function ProjectCard({ project, gridCol, gridRow, onClick }: ProjectCardP
         <img
           src={project.image}
           alt={project.title}
-          className="w-full h-full object-cover opacity-60 group-hover:opacity-75 group-hover:scale-105 transition-all duration-700 ease-out"
+          className="w-full h-full object-cover opacity-55 group-hover:opacity-70 group-hover:scale-105 transition-all duration-700 ease-out"
         />
-        {/* Subtle white vignette overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent" />
+        {/* Dark vignette overlay — consistent with dark theme */}
+        <div className="absolute inset-0 bg-linear-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
       </div>
 
-      {/* Hover arrow indicator */}
-      <div className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-blue-500 border border-white/25 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-md shadow-blue-500/20 transform translate-y-1 group-hover:translate-y-0">
+      {/* Hover arrow indicator — appears with spring translate */}
+      <div
+        className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-250 shadow-lg transform translate-y-2 group-hover:translate-y-0"
+        style={{
+          background: "var(--accent-gradient)",
+          boxShadow: "0 4px 14px rgba(34, 211, 238, 0.25)",
+        }}
+      >
         <ArrowUpRight className="w-4 h-4 text-white" />
       </div>
 
-      {/* High-blur Frosted Bottom Panel */}
-      <div className="absolute bottom-0 left-0 right-0 p-4.5 z-10 bg-white/88 backdrop-blur-md border-t border-white/60 shadow-lg flex flex-col justify-center">
-        <h3 className="text-[14px] font-bold text-slate-850 tracking-tight">{project.title}</h3>
-        <p className="text-[10px] text-slate-500 mt-0.5 font-bold uppercase tracking-wider">{project.subtitle}</p>
+      {/* Dark Frosted Bottom Panel — matches dark portfolio theme */}
+      <div
+        className="absolute bottom-0 left-0 right-0 p-4.5 z-10 border-t border-white/10 flex flex-col justify-center"
+        style={{
+          background: "rgba(8, 11, 20, 0.82)",
+          backdropFilter: "blur(16px) saturate(150%)",
+          WebkitBackdropFilter: "blur(16px) saturate(150%)",
+        }}
+      >
+        <h3 className="text-[14px] font-bold text-(--text-primary) tracking-tight">
+          {project.title}
+        </h3>
+        <p
+          className="text-[10px] text-(--text-muted) mt-0.5 font-bold uppercase tracking-wider"
+          style={{ fontFamily: "var(--font-mono)" }}
+        >
+          {project.subtitle}
+        </p>
       </div>
     </article>
   );
