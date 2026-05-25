@@ -22,6 +22,7 @@ import { ContactCard } from "@/components/bento/ContactCard";
 import { FeaturedProjectsCard } from "@/components/bento/FeaturedProjectsCard";
 import { ExperienceCard } from "@/components/bento/ExperienceCard";
 import { ProjectCard } from "@/components/bento/ProjectCard";
+import { MobileLayout } from "@/components/mobile/MobileLayout";
 
 export default function Home() {
   const [selectedProject, setSelectedProject] = useState<ProjectCardData | null>(null);
@@ -309,57 +310,66 @@ export default function Home() {
       </div>
 
       {/* Centered container with optimized padding and dimensions */}
-      <div className="w-full h-full max-w-[1600px] max-h-[960px] p-4 md:p-6 lg:p-8 relative z-10">
-        <main
-          className="w-full h-full min-h-0"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(12, 1fr)",
-            gridTemplateRows: "2.3fr 0.7fr 0.8fr 0.4fr 2.2fr",
-            gap: "20px",
-          }}
-        >
-          {/* Row 1–2 | Col 1–4: Profile */}
-          <ProfileCard />
+      <div className="w-full h-full max-w-[1600px] max-h-[960px] p-4 md:p-6 lg:p-8 relative z-10 flex items-center justify-center">
+        
+        {/* Desktop 12x5 Bento Grid (Visible on >= 1024px screen widths) */}
+        <div className="hidden lg:block w-full h-full min-h-0">
+          <main
+            className="w-full h-full min-h-0"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(12, 1fr)",
+              gridTemplateRows: "2.3fr 0.7fr 0.8fr 0.4fr 2.2fr",
+              gap: "20px",
+            }}
+          >
+            {/* Row 1–2 | Col 1–4: Profile */}
+            <ProfileCard />
 
-          {/* Row 1 | Col 5–9: Highlight/Latest Project Showcase */}
-          <HighlightProjectCard project={PROJECTS[0]} onClick={() => openProject(PROJECTS[0])} />
+            {/* Row 1 | Col 5–9: Highlight/Latest Project Showcase */}
+            <HighlightProjectCard project={PROJECTS[0]} onClick={() => openProject(PROJECTS[0])} />
 
-          {/* Row 1–2 | Col 10–12: Extra Container */}
-          <ExtraCard />
+            {/* Row 1–2 | Col 10–12: Extra Container */}
+            <ExtraCard />
 
-          {/* Row 2 | Col 5–9: Education */}
-          <EducationCard onClick={() => openDetails(EDUCATION_DATA)} />
+            {/* Row 2 | Col 5–9: Education */}
+            <EducationCard onClick={() => openDetails(EDUCATION_DATA)} />
 
-          {/* Row 3 | Col 1–9: Tech Stacks */}
-          <TechStacksCard onViewAll={() => openDetails(SKILLS_DATA)} />
+            {/* Row 3 | Col 1–9: Tech Stacks */}
+            <TechStacksCard onViewAll={() => openDetails(SKILLS_DATA)} />
 
+            {/* Row 3–5 | Col 10–12: Contact */}
+            <ContactCard />
 
-          {/* Row 3–5 | Col 10–12: Contact */}
-          <ContactCard />
+            {/* Row 4 | Col 1–5: Featured Projects Header */}
+            <FeaturedProjectsCard />
 
-          {/* Row 4 | Col 1–5: Featured Projects Header */}
-          <FeaturedProjectsCard />
+            {/* Row 4–5 | Col 6–9: Experience */}
+            <ExperienceCard onClick={() => openDetails(EXPERIENCE_DATA)} />
 
-          {/* Row 4–5 | Col 6–9: Experience */}
-          <ExperienceCard onClick={() => openDetails(EXPERIENCE_DATA)} />
+            {/* Row 5 | Col 1–3: FinCore V3 */}
+            <ProjectCard
+              project={PROJECTS[1]}
+              gridCol="1 / 4"
+              gridRow="5 / 6"
+              onClick={openProject}
+            />
 
-          {/* Row 5 | Col 1–3: FinCore V3 */}
-          <ProjectCard
-            project={PROJECTS[1]}
-            gridCol="1 / 4"
-            gridRow="5 / 6"
-            onClick={openProject}
-          />
+            {/* Row 5 | Col 3–6: DataSense */}
+            <ProjectCard
+              project={PROJECTS[2]}
+              gridCol="3 / 6"
+              gridRow="5 / 6"
+              onClick={openProject}
+            />
+          </main>
+        </div>
 
-          {/* Row 5 | Col 3–6: DataSense */}
-          <ProjectCard
-            project={PROJECTS[2]}
-            gridCol="3 / 6"
-            gridRow="5 / 6"
-            onClick={openProject}
-          />
-        </main>
+        {/* Mobile/Tablet Vertically Flowing Scroll Deck (Visible on < 1024px screens) */}
+        <div className="block lg:hidden w-full h-full overflow-y-auto scrollbar-none px-2 relative z-10">
+          <MobileLayout openProject={openProject} openDetails={openDetails} />
+        </div>
+
       </div>
 
       {/* Modals */}

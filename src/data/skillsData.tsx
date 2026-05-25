@@ -210,6 +210,12 @@ export const SKILLS_LIST: SkillInfo[] = [
     category: "Technologies & Dev Tools",
     colorClass: "hover:bg-cyan-500/10 hover:border-cyan-500/30 hover:text-cyan-400",
     icon: <img src="https://res.cloudinary.com/djaved28z/image/upload/v1779674696/antigravity-color_gpg5pd.svg" alt="Antigravity" className="w-full h-full object-contain" />
+  },
+  {
+    name: "Postman",
+    category: "Technologies & Dev Tools",
+    colorClass: "hover:bg-cyan-500/10 hover:border-cyan-500/30 hover:text-cyan-400",
+    icon: <img src="https://res.cloudinary.com/djaved28z/image/upload/v1779707084/postman-icon-svgrepo-com_winnod.svg" alt="Postman" className="w-full h-full object-contain" />
   }
 ];
 

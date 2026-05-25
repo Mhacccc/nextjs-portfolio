@@ -1,12 +1,26 @@
 "use client";
 
 import { GraduationCap, ChevronRight } from "lucide-react";
+import { EDUCATION_DATA } from "@/data/portfolioData";
 
 interface EducationCardProps {
   onClick: () => void;
 }
 
 export function EducationCard({ onClick }: EducationCardProps) {
+  const primaryEdu = EDUCATION_DATA.items?.[0];
+  
+  // Dynamically format "Bachelor of Science in ..." -> "B.S. ..."
+  const displayTitle = primaryEdu?.title
+    ? primaryEdu.title.replace("Bachelor of Science in ", "B.S. ")
+    : "Education";
+    
+  const displaySubtitle = primaryEdu?.shortname
+    ? ` · ${primaryEdu.shortname}`
+    : primaryEdu?.subtitle 
+      ? ` · ${primaryEdu.subtitle}` 
+      : "";
+
   return (
     <article
       className="card card-clickable p-1.5"
@@ -26,7 +40,9 @@ export function EducationCard({ onClick }: EducationCardProps) {
           </div>
           <div>
             <h3 className="text-sm font-bold text-(--text-primary)">Education</h3>
-            <p className="text-[11px] text-(--text-muted) mt-0.5 font-medium" style={{ fontFamily: "var(--font-mono)" }}>B.S. Computer Science · PUP Manila</p>
+            <p className="text-[11px] text-(--text-muted) mt-0.5 font-medium" style={{ fontFamily: "var(--font-mono)" }}>
+              {displayTitle}{displaySubtitle}
+            </p>
           </div>
         </div>
         <ChevronRight className="w-4 h-4 text-(--text-muted) group-hover:text-blue-400 group-hover:translate-x-0.5 transition-all duration-200" />

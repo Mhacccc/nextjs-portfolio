@@ -8,6 +8,7 @@ export interface DetailItem {
   id: string;
   title: string;
   subtitle: string;
+  shortname?: string;
   date: string;
   description: string;
   bullets?: string[];
@@ -224,8 +225,8 @@ export default function DetailsModal({ isOpen, onClose, data }: DetailsModalProp
 
                   {/* Card */}
                   <div className="p-5 rounded-2xl bg-white/4 border border-white/8 hover:border-blue-500/25 hover:bg-white/6 transition-all duration-200">
-                    <div className="flex flex-wrap items-start justify-between gap-2 mb-1.5">
-                      <h3 className="font-bold text-(--text-primary) text-base leading-snug">
+                    <div className="flex items-start justify-between flex-wrap md:flex-nowrap gap-2 mb-1.5">
+                      <h3 className="max-w-sm font-bold text-(--text-primary) text-base leading-snug">
                         {item.title}
                       </h3>
                       <span

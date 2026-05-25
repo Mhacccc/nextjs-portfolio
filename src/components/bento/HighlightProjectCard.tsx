@@ -53,7 +53,7 @@ export function HighlightProjectCard({ project, onClick }: HighlightProjectCardP
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white font-semibold text-xs border border-white/15 transition-all duration-300 group cursor-pointer hover:scale-[1.03] hover:shadow-lg active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                 style={{
                   background: "var(--accent-gradient)",
-                  boxShadow: "0 4px 14px rgba(34, 211, 238, 0.25)",
+                  boxShadow: "0 4px 14px rgba(34, 211, 238, 0.2)",
                 }}
                 tabIndex={-1} /* parent article is the interactive element */
               >
@@ -70,7 +70,7 @@ export function HighlightProjectCard({ project, onClick }: HighlightProjectCardP
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-cyan-500/10 blur-3xl opacity-60 group-hover:opacity-100 group-hover:bg-blue-500/15 transition-all duration-700" />
           
           <img
-            src={project.image}
+            src={project.highlightImage || project.image}
             alt={project.title}
             className="w-full h-full object-contain transition-transform duration-500 ease-out group-hover:scale-[1.05]"
           />

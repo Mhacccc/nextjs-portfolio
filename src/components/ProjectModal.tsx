@@ -13,6 +13,7 @@ export interface ProjectData {
   tags: string[];
   features: string[];
   stats: { label: string; value: string }[];
+  link?: string;
 }
 
 interface ProjectModalProps {
@@ -208,8 +209,10 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
 
             {/* CTA */}
             <a
-              href="#"
-              onClick={(e) => e.preventDefault()}
+              href={project.link || "#"}
+              target={project.link ? "_blank" : undefined}
+              rel={project.link ? "noopener noreferrer" : undefined}
+              onClick={project.link ? undefined : (e) => e.preventDefault()}
               className="w-full py-3.5 rounded-2xl text-white font-bold text-sm border border-white/15 transition-all duration-250 flex items-center justify-center gap-2 shadow-lg cursor-pointer hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
               style={{
                 background: "var(--accent-gradient)",

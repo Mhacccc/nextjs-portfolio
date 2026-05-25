@@ -6,6 +6,7 @@ import { ArrowUpRight } from "lucide-react";
 // Extended type with subtitle for card display
 export interface ProjectCardData extends ProjectData {
   subtitle: string;
+  highlightImage?: string;
 }
 
 interface ProjectCardProps {

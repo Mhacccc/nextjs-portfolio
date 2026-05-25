@@ -7,7 +7,9 @@ export const PROJECTS: ProjectCardData[] = [
     title: "PingMe",
     subtitle: "IoT & Mobile Safety PWA",
     category: "IoT & PWA",
-    image: "/projects/pingme/finalview.png",
+    image: "/projects/pingme/web-view.png",
+    highlightImage: "/projects/pingme/finalview.png",
+    link: "https://ping-me-now.netlify.app/",
     description: "An IoT-based personal safety system combining a smart bracelet with a responsive PWA for instant emergency alerts and live GPS tracking.",
     longDescription: "PingMe is an innovative personal safety ecosystem designed to bridge the gap between physical distress and mobile rescue. Developed as a Bachelor of Science in Information Technology thesis at the Technological University of the Philippines (TUP), it pairs a custom-built smart bracelet (utilizing a Raspberry Pi, GPS module, and lithium power cell) with a responsive Progressive Web App (PWA). By pressing the bracelet's physical button, users can trigger instantaneous SOS alerts without unlocking their phones. Real-time locations, interactive geofences, and safety status logs are dynamically rendered using Leaflet and streamed securely to family monitors via Google Cloud Firestore, entirely serverless.",
     tags: ["React.js", "Leaflet.js", "Firebase", "Python", "Cloudinary", "IoT", "PWA"],
@@ -89,17 +91,19 @@ export const EDUCATION_DATA: DetailsData = {
   items: [
     {
       id: "edu-1",
-      title: "B.S. Computer Science",
-      subtitle: "Polytechnic University of the Philippines",
-      date: "2017 – 2021",
-      description: "Graduated with Latin Honors. Thesis on optimizing graph-based relational data in distributed systems using adjacency-matrix partitioning."
+      title: "Bachelor of Science in Information Technology",
+      subtitle: "Technological University of the Philippines - Manila",
+      date: "2022 – 2026",
+      description: "Specialized in Web Systems, Software Engineering, and Internet of Things (IoT). Capstone thesis on 'PingMe'—an IoT-integrated personal safety PWA and hardware smart bracelet with sub-2s alert latency.",
+      shortname: "TUP-Manila"
     },
     {
       id: "edu-2",
-      title: "Full-Stack Web Development",
-      subtitle: "Zuitt Coding Bootcamp",
-      date: "2021",
-      description: "Intensive 3-month bootcamp covering MERN stack, REST APIs, authentication, and deployment to cloud platforms."
+      title: "Senior High School – Science, Technology, Engineering, and Mathematics (STEM)",
+      subtitle: "First City Providential College",
+      date: "2016 – 2018",
+      description: "Academic track focused on Science, Technology, Engineering, and Mathematics, providing foundational knowledge in math, physics, chemistry, and computer programming.",
+      shortname: "FCPC - Bulacan"
     }
   ]
 };
@@ -113,7 +117,7 @@ export const SKILLS_DATA: DetailsData = {
     "ExpressJS", "Firebase", "Supabase", "REST API", "JWT",
     "MongoDB", "MySQL", "Neon", "Postgres", "Mongoose",
     "Prisma", "Git", "GitHub", "Bitbucket", "AWS S3",
-    "Figma", "Antigravity"
+    "Figma", "Antigravity","Postman"
   ]
 };
 

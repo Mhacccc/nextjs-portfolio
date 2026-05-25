@@ -1,4 +1,5 @@
-import { AtSign, Link2, Mail, ArrowUpRight } from "lucide-react";
+import { Mail, ArrowUpRight } from "lucide-react";
+import { FaGithub, FaLinkedin, FaFacebook, FaPhone } from "react-icons/fa";
 
 export function ContactCard() {
   return (
@@ -6,7 +7,7 @@ export function ContactCard() {
       className="card p-2"
       style={{ gridColumn: "10 / 13", gridRow: "3 / 6" }}
     >
-      <div className="inner-card p-6 flex flex-col justify-between h-full relative overflow-hidden">
+      <div className="inner-card p-6 flex flex-col gap-10 h-full relative overflow-hidden">
         {/* Decorative subtle background gradient leak */}
         <div className="absolute -bottom-12 -right-12 w-36 h-36 rounded-full bg-blue-500/5 blur-2xl pointer-events-none" />
 
@@ -22,28 +23,50 @@ export function ContactCard() {
 
         <div className="flex flex-col gap-2 relative z-10">
           <a
-            href="https://twitter.com/marklouie_dev"
+            href="https://github.com/Mhacccc"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/6 border border-white/10 hover:border-blue-500/30 hover:bg-white/10 transition-all duration-200 group cursor-pointer"
           >
-            <AtSign className="w-3.5 h-3.5 text-(--text-muted) group-hover:text-blue-400 transition-colors" />
-            <span className="text-[12px] text-(--text-secondary) group-hover:text-(--text-primary) transition-colors flex-1 font-medium">@marklouie_dev</span>
+            <FaGithub className="w-3.5 h-3.5 text-(--text-muted) group-hover:text-blue-400 transition-colors" />
+            <span className="text-[12px] text-(--text-secondary) group-hover:text-(--text-primary) transition-colors flex-1 font-medium truncate">github.com/Mhacccc</span>
             <ArrowUpRight className="w-3 h-3 text-(--text-muted) opacity-0 group-hover:opacity-100 transition-opacity" />
           </a>
+          
           <a
-            href="https://linkedin.com/in/marklouie"
+            href="https://www.linkedin.com/in/mark-louie-balaba-a89bab410/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/6 border border-white/10 hover:border-blue-500/30 hover:bg-white/10 transition-all duration-200 group cursor-pointer"
           >
-            <Link2 className="w-3.5 h-3.5 text-(--text-muted) group-hover:text-blue-400 transition-colors" />
-            <span className="text-[12px] text-(--text-secondary) group-hover:text-(--text-primary) transition-colors flex-1 font-medium">linkedin.com/in/marklouie</span>
+            <FaLinkedin className="w-3.5 h-3.5 text-(--text-muted) group-hover:text-blue-400 transition-colors" />
+            <span className="text-[12px] text-(--text-secondary) group-hover:text-(--text-primary) transition-colors flex-1 font-medium truncate">Mark Louie Balaba</span>
             <ArrowUpRight className="w-3.5 h-3.5 text-(--text-muted) opacity-0 group-hover:opacity-100 transition-opacity" />
           </a>
+
           <a
-            href="mailto:mark@example.com"
-            className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-white border border-white/15 transition-all duration-200 group mt-1.5 cursor-pointer hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+            href="https://www.facebook.com/Mhaccccyaps/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/6 border border-white/10 hover:border-blue-500/30 hover:bg-white/10 transition-all duration-200 group cursor-pointer"
+          >
+            <FaFacebook className="w-3.5 h-3.5 text-(--text-muted) group-hover:text-blue-400 transition-colors" />
+            <span className="text-[12px] text-(--text-secondary) group-hover:text-(--text-primary) transition-colors flex-1 font-medium truncate">facebook.com/Mhaccccyaps</span>
+            <ArrowUpRight className="w-3 h-3 text-(--text-muted) opacity-0 group-hover:opacity-100 transition-opacity" />
+          </a>
+
+          <a
+            href="tel:+639603898078"
+            className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/6 border border-white/10 hover:border-blue-500/30 hover:bg-white/10 transition-all duration-200 group cursor-pointer"
+          >
+            <FaPhone className="w-3.5 h-3.5 text-(--text-muted) group-hover:text-blue-400 transition-colors" />
+            <span className="text-[12px] text-(--text-secondary) group-hover:text-(--text-primary) transition-colors flex-1 font-medium truncate">+63 960 389 8078</span>
+            <ArrowUpRight className="w-3 h-3 text-(--text-muted) opacity-0 group-hover:opacity-100 transition-opacity" />
+          </a>
+
+          <a
+            href="mailto:marklouie.balaba14@gmail.com"
+            className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-white border border-white/15 transition-all duration-200 group mt-1 cursor-pointer hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
             style={{
               background: "var(--accent-gradient)",
               boxShadow: "0 4px 16px rgba(34, 211, 238, 0.2)",
