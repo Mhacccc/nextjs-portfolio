@@ -26,7 +26,7 @@ export function ExperienceCard({ onClick }: ExperienceCardProps) {
           </div>
           <h3 className="text-base font-bold text-(--text-primary) mb-1.5 tracking-tight">Experience</h3>
           <p className="text-[12px] text-(--text-muted) leading-relaxed max-w-[240px] font-medium">
-            4+ years building enterprise-scale platforms & SaaS products.
+            Full-stack web engineering internship building HRIS platforms.
           </p>
         </div>
 

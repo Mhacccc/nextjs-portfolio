@@ -3,6 +3,26 @@ import { DetailsData } from "@/components/DetailsModal";
 
 export const PROJECTS: ProjectCardData[] = [
   {
+    id: "pingme",
+    title: "PingMe",
+    subtitle: "IoT & Mobile Safety PWA",
+    category: "IoT & PWA",
+    image: "/projects/pingme/finalview.png",
+    description: "An IoT-based personal safety system combining a smart bracelet with a responsive PWA for instant emergency alerts and live GPS tracking.",
+    longDescription: "PingMe is an innovative personal safety ecosystem designed to bridge the gap between physical distress and mobile rescue. Developed as a Bachelor of Science in Information Technology thesis at the Technological University of the Philippines (TUP), it pairs a custom-built smart bracelet (utilizing a Raspberry Pi, GPS module, and lithium power cell) with a responsive Progressive Web App (PWA). By pressing the bracelet's physical button, users can trigger instantaneous SOS alerts without unlocking their phones. Real-time locations, interactive geofences, and safety status logs are dynamically rendered using Leaflet and streamed securely to family monitors via Google Cloud Firestore, entirely serverless.",
+    tags: ["React.js", "Leaflet.js", "Firebase", "Python", "Cloudinary", "IoT", "PWA"],
+    features: [
+      "Discreet Smart Bracelet SOS: Immediate physical distress signal triggered via tactile hardware button.",
+      "Leaflet & OpenStreetMap Live Tracking: Smooth, real-time map tracking with geofence boundaries drawn dynamically.",
+      "Serverless Firestore Sync: Instant alert propagation and location streaming with zero backend API latency.",
+      "Automated Keep-Alive Alert: Resends emergency SOS signals every 5 minutes until user marks themselves as safe."
+    ],
+    stats: [
+      { label: "SOS Response Delay", value: "< 2s" },
+      { label: "Battery Standby", value: "14 hrs" }
+    ]
+  },
+  {
     id: "fincore",
     title: "FinCore V3",
     subtitle: "Fintech Core Architecture",
@@ -50,19 +70,15 @@ export const EXPERIENCE_DATA: DetailsData = {
   items: [
     {
       id: "exp-1",
-      title: "Senior Full-Stack Engineer",
-      subtitle: "Accenture Philippines",
-      date: "2022 – Present",
-      description: "Leading the full-stack development of enterprise-scale web platforms for global banking clients. Architected micro-service systems that reduced deployment cycles by 60%.",
-      bullets: ["Architected micro-frontend systems", "Mentored a team of 8 engineers", "Reduced API latency by 45% via Redis caching"]
-    },
-    {
-      id: "exp-2",
-      title: "Software Engineer",
-      subtitle: "Freelance / Remote",
-      date: "2020 – 2022",
-      description: "Built and delivered 12+ client projects including SaaS dashboards, fintech tools, and e-commerce platforms using React, Node.js, and AWS.",
-      bullets: ["Delivered 12 production-ready projects", "Built custom CMS for 3 media clients", "Integrated Stripe & PayMongo payment gateways"]
+      title: "Intern Web Developer (Full-Stack)",
+      subtitle: "Creciendo Philippines Incorporated",
+      date: "Jan 30 – May 19",
+      description: "Contributed as a Full-Stack Developer to the end-to-end design and implementation of an enterprise Human Resource Information System (HRIS) designed to streamline internal company operations.",
+      bullets: [
+        "Architected and managed the core Attendance Module, integrating secure check-in validation rules and database logs.",
+        "Engineered the Leave Request system, developing automated approval workflows and email notification triggers.",
+        "Built the Loan Request processing system, designing secure forms and database schemas to manage balances, terms, and transaction histories."
+      ]
     }
   ]
 };
@@ -92,10 +108,12 @@ export const SKILLS_DATA: DetailsData = {
   type: "skills",
   title: "Skills & Technologies",
   skills: [
-    "TypeScript", "React", "Next.js", "Node.js", "PostgreSQL",
-    "Docker", "AWS", "GraphQL", "Prisma", "Tailwind CSS",
-    "JavaScript", "HTML5", "CSS3", "Git", "MongoDB",
-    "Redis", "Python", "Figma"
+    "HTML5", "CSS3", "JavaScript", "TypeScript", "React js",
+    "Next js", "Tailwind", "Vite", "TanStack Query", "Zustand", "NodeJS",
+    "ExpressJS", "Firebase", "Supabase", "REST API", "JWT",
+    "MongoDB", "MySQL", "Neon", "Postgres", "Mongoose",
+    "Prisma", "Git", "GitHub", "Bitbucket", "AWS S3",
+    "Figma", "Antigravity"
   ]
 };
 

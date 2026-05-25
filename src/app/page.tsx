@@ -14,7 +14,7 @@ import { PROJECTS, EXPERIENCE_DATA, EDUCATION_DATA, SKILLS_DATA } from "@/data/p
 
 // Bento Cards
 import { ProfileCard } from "@/components/bento/ProfileCard";
-import { AnalyticsCard } from "@/components/bento/AnalyticsCard";
+import { HighlightProjectCard } from "@/components/bento/HighlightProjectCard";
 import { ExtraCard } from "@/components/bento/ExtraCard";
 import { EducationCard } from "@/components/bento/EducationCard";
 import { TechStacksCard } from "@/components/bento/TechStacksCard";
@@ -322,8 +322,8 @@ export default function Home() {
           {/* Row 1–2 | Col 1–4: Profile */}
           <ProfileCard />
 
-          {/* Row 1 | Col 5–9: Analytics Case Study */}
-          <AnalyticsCard onClick={() => openProject(PROJECTS[0])} />
+          {/* Row 1 | Col 5–9: Highlight/Latest Project Showcase */}
+          <HighlightProjectCard project={PROJECTS[0]} onClick={() => openProject(PROJECTS[0])} />
 
           {/* Row 1–2 | Col 10–12: Extra Container */}
           <ExtraCard />
@@ -346,7 +346,7 @@ export default function Home() {
 
           {/* Row 5 | Col 1–3: FinCore V3 */}
           <ProjectCard
-            project={PROJECTS[0]}
+            project={PROJECTS[1]}
             gridCol="1 / 4"
             gridRow="5 / 6"
             onClick={openProject}
@@ -354,7 +354,7 @@ export default function Home() {
 
           {/* Row 5 | Col 3–6: DataSense */}
           <ProjectCard
-            project={PROJECTS[1]}
+            project={PROJECTS[2]}
             gridCol="3 / 6"
             gridRow="5 / 6"
             onClick={openProject}

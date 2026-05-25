@@ -9,7 +9,7 @@
   --animate-pulse-ring: pulse-ring 3s ease-in-out infinite;
   --animate-float-3d: float-3d 8s ease-in-out infinite;
   --animate-float-3d-delayed: float-3d-delayed 10s ease-in-out infinite;
-  --animate-marquee: marquee 30s linear infinite;
+  --animate-marquee: marquee 80s linear infinite;
   --animate-spin-clockwise: spin-clockwise 25s linear infinite;
   --animate-spin-counter: spin-counter 35s linear infinite;
   --animate-pulse-slow: pulse-slow 8s ease-in-out infinite;
