@@ -66,11 +66,9 @@ export function ProfileCard() {
             <span>Manila, Philippines</span>
           </div>
           <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              alert("CV download triggered!");
-            }}
+            href="https://drive.google.com/file/d/1crovfIMMfwLwo94XVx7mLjccOJZ_EZI5/view?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-white font-bold text-[11px] shadow-md transition-all duration-250 cursor-pointer group hover:scale-[1.03] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
             style={{
               background: "var(--accent-gradient)",

@@ -25,45 +25,49 @@ export const PROJECTS: ProjectCardData[] = [
     ]
   },
   {
-    id: "fincore",
-    title: "FinCore V3",
-    subtitle: "Fintech Core Architecture",
-    category: "Fintech",
-    image: "/fincore.png",
-    description: "High-performance fintech core banking architecture with real-time transaction processing.",
-    longDescription: "FinCore V3 is an enterprise-grade core banking system built to handle millions of concurrent transactions with sub-millisecond latency. It powers multi-currency ledgers, regulatory reporting, and fraud detection pipelines for Tier-1 financial institutions.",
-    tags: ["TypeScript", "Node.js", "PostgreSQL", "Kafka", "Docker", "AWS"],
+    id: "hirequal",
+    title: "HireQual: AI-Powered Applicant Tracking System",
+    subtitle: "Automate & Streamline Recruitment",
+    category: "Human Resources Technology (HRTech)",
+    image: "/projects/hireQual/hirequal.png",
+    description: "A full-stack candidate management platform featuring Google Gemini AI resume screening, an interactive Kanban recruitment pipeline, and role-based team collaboration workspaces.",
+    longDescription: "HireQual is a decoupled full-stack web application designed to eliminate administrative bottlenecks in hiring workflows. By combining raw PDF text-extraction pipelines with the Google Gemini AI API, the platform automatically parses, interprets, and highlights relevant skills from uploaded applicant resumes. Recruiters can drag-and-drop candidates through active hiring stages via a responsive Kanban board interface, manage multi-user organizational workspaces with a built-in email invitation system, and instantly publish updates to synchronized public career listings.",
+    tags: ["React", "Node.js", "Express", "MongoDB", "Gemini AI", "Tailwind CSS", "Vite"],
+    link: "https://hirequal.vercel.app/",
     features: [
-      "Real-time ledger reconciliation across multi-currency accounts",
-      "Kafka-powered event streaming for fraud detection",
-      "GDPR-compliant audit trail with immutable event logs",
-      "Sub-10ms API response under 100k concurrent requests"
+      "AI-driven resume parsing and intelligent candidate matching powered by Google Gemini",
+      "Dynamic drag-and-drop Kanban workflow for real-time applicant status tracking",
+      "Unified system architecture featuring split internal recruiter dashboards and an external public job application portal",
+      "Secure team collaboration workspace with role-based member authentication and access controls",
+      "Fully fluid responsive layout leveraging specialized table and card patterns optimized for desktop and mobile screen footprints"
     ],
     stats: [
-      { label: "Transactions/s", value: "1.2M" },
-      { label: "Uptime", value: "99.99%" }
+      { label: "AI Parsing Latency", value: "< 2.5s" },
+      { label: "Applicants", value: "5" }
     ]
   },
   {
-    id: "datasense",
-    title: "DataSense",
-    subtitle: "SaaS Intelligence Layer",
-    category: "SaaS",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
-    description: "Intelligent data analytics layer that transforms raw product telemetry into actionable insights.",
-    longDescription: "DataSense is a SaaS intelligence platform that aggregates raw product telemetry, user behavioral signals, and infrastructure metrics into a beautiful, real-time analytics dashboard. It enables product teams to make data-driven decisions without writing a single SQL query.",
-    tags: ["React", "Python", "FastAPI", "ClickHouse", "Redis", "Tailwind CSS"],
+
+    id: "user-management-system",
+    title: "Secure User Management & Audit System",
+    subtitle: "Centralized User Control & Activity Tracking",
+    category: "Identity & Access Management (IAM)",
+    image: "/projects/ums/ums.png",
+    description: "A robust full-stack administration portal featuring secure role-based authentication, user profile management, and an unalterable system-wide activity audit trail.",
+    longDescription: "This platform is a decoupled full-stack user administration architecture built to provide secure user tracking and granular profile management. The backend is an automated Node.js/Express API connected to MongoDB, featuring dedicated schemas for structural user identities and immutable event-driven audit tracking. The frontend utilizes the Next.js App Router, combining secure HTTP-only cookie or session validation with Edge-ready middleware route guards. It features an interactive, component-driven administration panel complete with responsive metric dashboards, personalized activity logs, and a unified theme subsystem.",
+    tags: ["Next.js", "Node.js", "Express", "MongoDB", "Tailwind CSS", "Shadcn UI", "REST API"],
     features: [
-      "No-code query builder for non-technical product teams",
-      "Anomaly detection powered by statistical z-score analysis",
-      "Real-time WebSocket dashboard with <100ms refresh rates",
-      "White-label embedding for SaaS product teams"
+      "Comprehensive system-wide Audit Logging framework capturing all data mutations, authentication changes, and user actions",
+      "Dynamic admin dashboard enabling secure user lookup, real-time metric evaluation, and granular profile editing",
+      "Decoupled multi-layered security utilizing secure backend authentication and Next.js layout-level middleware route guards",
+      "Dedicated 'My Activity' pipeline giving individual users complete transparency over their session history and actions",
+      "Modern interface designed with modular Shadcn UI primitives, custom layouts, and a native light/dark mode theme toggle"
     ],
     stats: [
-      { label: "Data Points/day", value: "500M" },
-      { label: "Active Teams", value: "320+" }
+      {label:"Audit Latency", value: "Real-time"},
+      {label: "Routing Engine", value: "Next.js App Router"}
     ]
-  }
+  },
 ];
 
 export const EXPERIENCE_DATA: DetailsData = {
