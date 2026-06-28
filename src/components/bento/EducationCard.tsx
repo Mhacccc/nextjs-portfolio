@@ -23,14 +23,14 @@ export function EducationCard({ onClick }: EducationCardProps) {
 
   return (
     <article
-      className="card card-clickable p-1.5"
+      className="card card-clickable "
       style={{ gridColumn: "5 / 10", gridRow: "2 / 3" }}
       onClick={onClick}
     >
       <div className="inner-card flex items-center justify-between px-6 py-4.5 group h-full">
         <div className="flex items-center gap-4">
           <div
-            className="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 shadow-md"
+            className="w-7 h-7 rounded-2xl flex items-center justify-center shrink-0 shadow-md"
             style={{
               background: "var(--accent-gradient)",
               boxShadow: "0 4px 12px rgba(34, 211, 238, 0.2)",
@@ -38,7 +38,7 @@ export function EducationCard({ onClick }: EducationCardProps) {
           >
             <GraduationCap className="w-4.5 h-4.5 text-white" />
           </div>
-          <div>
+          <div className="flex gap-4">
             <h3 className="text-sm font-bold text-(--text-primary)">Education</h3>
             <p className="text-[11px] text-(--text-muted) mt-0.5 font-medium" style={{ fontFamily: "var(--font-mono)" }}>
               {displayTitle}{displaySubtitle}

@@ -7,6 +7,7 @@ import { DetailsData } from "@/components/DetailsModal";
 // Modals
 import ProjectModal from "@/components/ProjectModal";
 import DetailsModal from "@/components/DetailsModal";
+import AllProjectsModal from "@/components/AllProjectsModal";
 
 // Data
 import { PROJECTS, EXPERIENCE_DATA, EDUCATION_DATA, SKILLS_DATA } from "@/data/portfolioData";
@@ -29,6 +30,7 @@ export default function Home() {
   const [selectedDetails, setSelectedDetails] = useState<DetailsData | null>(null);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [isAllProjectsOpen, setIsAllProjectsOpen] = useState(false);
 
   const openProject = (p: ProjectCardData) => {
     setSelectedProject(p);
@@ -319,7 +321,7 @@ export default function Home() {
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(12, 1fr)",
-              gridTemplateRows: "2.3fr 0.7fr 0.8fr 0.4fr 2.2fr",
+              gridTemplateRows: "2.5fr 0.5fr 0.8fr 0.4fr 2.2fr",
               gap: "20px",
             }}
           >
@@ -342,7 +344,7 @@ export default function Home() {
             <ContactCard />
 
             {/* Row 4 | Col 1–5: Featured Projects Header */}
-            <FeaturedProjectsCard />
+            <FeaturedProjectsCard onClick={() => setIsAllProjectsOpen(true)} />
 
             {/* Row 4–5 | Col 6–9: Experience */}
             <ExperienceCard onClick={() => openDetails(EXPERIENCE_DATA)} />
@@ -367,7 +369,11 @@ export default function Home() {
 
         {/* Mobile/Tablet Vertically Flowing Scroll Deck (Visible on < 1024px screens) */}
         <div className="block lg:hidden w-full h-full overflow-y-auto scrollbar-none px-2 relative z-10">
-          <MobileLayout openProject={openProject} openDetails={openDetails} />
+          <MobileLayout
+            openProject={openProject}
+            openDetails={openDetails}
+            onViewAllProjects={() => setIsAllProjectsOpen(true)}
+          />
         </div>
 
       </div>
@@ -382,6 +388,12 @@ export default function Home() {
         isOpen={isDetailsModalOpen}
         onClose={() => setIsDetailsModalOpen(false)}
         data={selectedDetails}
+      />
+      <AllProjectsModal
+        isOpen={isAllProjectsOpen}
+        onClose={() => setIsAllProjectsOpen(false)}
+        projects={PROJECTS}
+        onProjectSelect={openProject}
       />
     </div>
   );

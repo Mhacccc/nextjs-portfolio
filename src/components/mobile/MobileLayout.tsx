@@ -13,11 +13,11 @@ import { SKILLS_LIST } from "@/data/skillsData";
 interface MobileLayoutProps {
   openProject: (p: ProjectCardData) => void;
   openDetails: (data: DetailsData) => void;
+  onViewAllProjects: () => void;
 }
 
-export function MobileLayout({ openProject, openDetails }: MobileLayoutProps) {
+export function MobileLayout({ openProject, openDetails, onViewAllProjects }: MobileLayoutProps) {
   const highlightProject = PROJECTS[0];
-  const secondaryProjects = PROJECTS.slice(1);
   const primaryEdu = EDUCATION_DATA.items?.[0];
   
   // Format "Bachelor of Science in ..." -> "B.S. ..."
@@ -220,8 +220,11 @@ export function MobileLayout({ openProject, openDetails }: MobileLayoutProps) {
       </section>
 
       {/* 6. Featured Projects Header Card */}
-      <section className="card p-1.5">
-        <div className="inner-card flex items-center justify-between px-5 py-4 h-full">
+      <section 
+        className="card card-clickable p-1.5"
+        onClick={onViewAllProjects}
+      >
+        <div className="inner-card flex items-center justify-between px-5 py-4 h-full group">
           <div className="flex items-center gap-3">
             <div
               className="w-8 h-8 rounded-xl flex items-center justify-center shadow-md shrink-0"
@@ -236,42 +239,12 @@ export function MobileLayout({ openProject, openDetails }: MobileLayoutProps) {
               Featured Projects
             </h3>
           </div>
-          <div className="flex items-center gap-1 text-(--text-muted) font-bold text-[10px]">
-            <span>Active List</span>
-            <ArrowRight className="w-3.5 h-3.5 text-cyan-400" />
+          <div className="flex items-center gap-1 text-(--text-muted) group-hover:text-blue-400 transition-colors duration-200 font-bold text-[10px]">
+            <span>View all</span>
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-200" />
           </div>
         </div>
       </section>
-
-      {/* 7. Bottom Projects Grid */}
-      <div className="grid grid-cols-2 gap-4">
-        {secondaryProjects.map((project) => (
-          <article
-            key={project.id}
-            className="card card-clickable flex flex-col overflow-hidden group p-0 relative"
-            onClick={() => openProject(project)}
-          >
-            {/* Aspect image header */}
-            <div className="w-full aspect-[4/3] relative overflow-hidden">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-full object-cover opacity-65 group-hover:opacity-75 group-hover:scale-105 transition-all duration-500"
-              />
-              <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-transparent to-transparent" />
-            </div>
-            {/* Small Footer Text */}
-            <div className="p-3.5 border-t border-white/5 bg-slate-950/70 flex-1 flex flex-col justify-center">
-              <h4 className="text-[13px] font-bold text-(--text-primary) tracking-tight leading-tight">
-                {project.title}
-              </h4>
-              <p className="text-[8.5px] text-(--text-muted) font-bold uppercase tracking-wider mt-0.5" style={{ fontFamily: "var(--font-mono)" }}>
-                {project.subtitle}
-              </p>
-            </div>
-          </article>
-        ))}
-      </div>
 
       {/* 8. Contact Card Social List */}
       <section className="card p-5 relative overflow-hidden flex flex-col gap-5">

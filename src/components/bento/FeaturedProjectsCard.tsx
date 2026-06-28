@@ -1,10 +1,15 @@
 import { FolderOpen, ArrowRight } from "lucide-react";
 
-export function FeaturedProjectsCard() {
+interface FeaturedProjectsCardProps {
+  onClick: () => void;
+}
+
+export function FeaturedProjectsCard({ onClick }: FeaturedProjectsCardProps) {
   return (
     <div
-      className="card  group cursor-pointer"
+      className="card group cursor-pointer"
       style={{ gridColumn: "1 / 6", gridRow: "4 / 5" }}
+      onClick={onClick}
     >
       <div className="inner-card flex items-center justify-between px-6 py-4.5 h-full">
         <div className="flex items-center gap-3">

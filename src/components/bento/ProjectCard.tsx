@@ -11,16 +11,20 @@ export interface ProjectCardData extends ProjectData {
 
 interface ProjectCardProps {
   project: ProjectCardData;
-  gridCol: string;
-  gridRow: string;
+  gridCol?: string;
+  gridRow?: string;
   onClick: (p: ProjectCardData) => void;
 }
 
 export function ProjectCard({ project, gridCol, gridRow, onClick }: ProjectCardProps) {
+  const style: React.CSSProperties = {};
+  if (gridCol) style.gridColumn = gridCol;
+  if (gridRow) style.gridRow = gridRow;
+
   return (
     <article
-      className="card card-clickable relative overflow-hidden group p-0"
-      style={{ gridColumn: gridCol, gridRow: gridRow }}
+      className="card card-clickable relative overflow-hidden group p-0 w-full h-full"
+      style={style}
       onClick={() => onClick(project)}
     >
       {/* Background image */}

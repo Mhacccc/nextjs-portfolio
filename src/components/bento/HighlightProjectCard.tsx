@@ -17,8 +17,8 @@ export function HighlightProjectCard({ project, onClick }: HighlightProjectCardP
     >
       <div className="inner-card p-0 flex h-full overflow-hidden relative">
         {/* Left Side: Copy and details */}
-        <div className="w-[58%] p-6 sm:p-7 flex flex-col justify-evenly h-full relative z-20 bg-linear-to-r from-slate-950/95 via-slate-950/75 to-transparent">
-          <div className="space-y-2">
+        <div className="w-[58%] p-6 sm:py-7 sm:pr-0 flex flex-col justify-between h-full relative z-20 bg-linear-to-r from-slate-950/95 via-slate-950/75 to-transparent">
+          <div className="space-y-1">
             {/* Monospace premium tag */}
             <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-cyan-500/40 bg-cyan-950/60 text-[9px] font-bold text-cyan-400 uppercase tracking-widest shadow-[0_0_12px_rgba(34,211,238,0.15)] relative z-30">
               <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
@@ -34,7 +34,7 @@ export function HighlightProjectCard({ project, onClick }: HighlightProjectCardP
           </div>
 
           {/* Tech tags and CTA */}
-          <div className="space-y-4">
+          <div className="space-y-2">
             {/* Tech Tags Mini Badge */}
             <div className="flex flex-wrap gap-1.5 max-w-full">
               {project.tags.slice(0, 4).map((tag) => (
@@ -47,8 +47,9 @@ export function HighlightProjectCard({ project, onClick }: HighlightProjectCardP
                 </span>
               ))}
             </div>
+          </div>
 
-            <div>
+          <div>
               <button
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white font-semibold text-xs border border-white/15 transition-all duration-300 group cursor-pointer hover:scale-[1.03] hover:shadow-lg active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                 style={{
@@ -61,7 +62,6 @@ export function HighlightProjectCard({ project, onClick }: HighlightProjectCardP
                 <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </button>
             </div>
-          </div>
         </div>
 
         {/* Right Side: Clean full-display project image (finalview.png) */}
