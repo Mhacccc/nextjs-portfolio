@@ -16,10 +16,11 @@ export function ExperienceCard({ onClick }: ExperienceCardProps) {
       style={{ gridColumn: "6 / 10", gridRow: "4 / 6" }}
       onClick={onClick}
     >
-      <div className="inner-card p-6 sm:p-7 flex flex-col justify-between h-full group relative overflow-hidden">
+      <div className="inner-card p-6 sm:p-4 flex flex-col justify-between h-full group relative overflow-hidden">
         <div>
           <div className="flex items-center justify-between mb-4.5">
-            <div
+            <div className="flex items-center gap-4">
+              <div
               className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-md"
               style={{
                 background: "var(--accent-gradient)",
@@ -28,6 +29,9 @@ export function ExperienceCard({ onClick }: ExperienceCardProps) {
             >
               <Briefcase className="w-5 h-5 text-white" />
             </div>
+             <h3 className="text-base font-bold text-(--text-primary) tracking-tight">Experience</h3>
+            </div>
+            
             {primaryExp && (
               <span 
                 className="text-[9px] px-2.5 py-1 rounded-full border border-blue-500/25 bg-blue-950/20 text-blue-400 font-bold uppercase tracking-wider"
@@ -38,7 +42,7 @@ export function ExperienceCard({ onClick }: ExperienceCardProps) {
             )}
           </div>
           
-          <h3 className="text-base font-bold text-(--text-primary) tracking-tight">Experience</h3>
+         
           {primaryExp && (
             <p className="text-[10.5px] text-(--text-muted) leading-relaxed mt-1 font-medium line-clamp-2">
               {primaryExp.description}
@@ -71,7 +75,7 @@ export function ExperienceCard({ onClick }: ExperienceCardProps) {
           )}
         </div>
 
-        <div className="flex items-center gap-1.5 text-(--text-muted) group-hover:text-blue-400 transition-colors duration-200 mt-4 relative z-10 font-bold text-[11px]">
+        <div className="flex items-center gap-1.5 text-(--text-muted) group-hover:text-blue-400 transition-colors duration-200 mt-2 relative z-10 font-bold text-[11px]">
           <span>View timeline</span>
           <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-300" />
         </div>
