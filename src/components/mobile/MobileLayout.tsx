@@ -14,9 +14,10 @@ interface MobileLayoutProps {
   openProject: (p: ProjectCardData) => void;
   openDetails: (data: DetailsData) => void;
   onViewAllProjects: () => void;
+  onEmailClick: () => void;
 }
 
-export function MobileLayout({ openProject, openDetails, onViewAllProjects }: MobileLayoutProps) {
+export function MobileLayout({ openProject, openDetails, onViewAllProjects, onEmailClick }: MobileLayoutProps) {
   const highlightProject = PROJECTS[0];
   const primaryEdu = EDUCATION_DATA.items?.[0];
   
@@ -255,7 +256,7 @@ export function MobileLayout({ openProject, openDetails, onViewAllProjects }: Mo
             Let&apos;s build <span className="accent">something together.</span>
           </h2>
           <p className="text-[11px] text-(--text-muted) leading-relaxed mt-1.5 font-medium">
-            Currently open to consultations and development positions.
+            Currently open to full-time opportunities, internships, and entry-level developer roles.
           </p>
         </div>
 
@@ -302,9 +303,9 @@ export function MobileLayout({ openProject, openDetails, onViewAllProjects }: Mo
             <ArrowUpRight className="w-3 h-3 text-(--text-muted) opacity-60 group-hover:opacity-100 transition-all" />
           </a>
 
-          <a
-            href="mailto:marklouie.balaba14@gmail.com"
-            className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-white border border-white/15 transition-all duration-200 mt-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
+          <button
+            onClick={onEmailClick}
+            className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-white border border-white/15 transition-all duration-200 mt-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99] w-full"
             style={{
               background: "var(--accent-gradient)",
               boxShadow: "0 4px 14px rgba(34, 211, 238, 0.2)",
@@ -312,7 +313,7 @@ export function MobileLayout({ openProject, openDetails, onViewAllProjects }: Mo
           >
             <Mail className="w-3.5 h-3.5 text-white" />
             <span className="text-[11px] text-white font-bold">Send an Email</span>
-          </a>
+          </button>
         </div>
       </section>
 

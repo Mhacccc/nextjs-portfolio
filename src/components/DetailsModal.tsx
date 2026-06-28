@@ -111,10 +111,8 @@ export default function DetailsModal({ isOpen, onClose, data }: DetailsModalProp
           isAnimatingOut ? "modal-exit" : "modal-enter"
         }`}
         style={{
-          background: "rgba(10, 13, 22, 0.93)",
+          background: "rgba(10, 13, 22, 0.975)",
           borderColor: "rgba(255,255,255,0.10)",
-          backdropFilter: "blur(40px) saturate(180%)",
-          WebkitBackdropFilter: "blur(40px) saturate(180%)",
           boxShadow: "0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06) inset",
         }}
       >

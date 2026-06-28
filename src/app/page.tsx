@@ -8,6 +8,7 @@ import { DetailsData } from "@/components/DetailsModal";
 import ProjectModal from "@/components/ProjectModal";
 import DetailsModal from "@/components/DetailsModal";
 import AllProjectsModal from "@/components/AllProjectsModal";
+import ContactModal from "@/components/ContactModal";
 
 // Data
 import { PROJECTS, EXPERIENCE_DATA, EDUCATION_DATA, SKILLS_DATA } from "@/data/portfolioData";
@@ -31,6 +32,7 @@ export default function Home() {
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [isAllProjectsOpen, setIsAllProjectsOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   const openProject = (p: ProjectCardData) => {
     setSelectedProject(p);
@@ -341,7 +343,7 @@ export default function Home() {
             <TechStacksCard onViewAll={() => openDetails(SKILLS_DATA)} />
 
             {/* Row 3–5 | Col 10–12: Contact */}
-            <ContactCard />
+            <ContactCard onEmailClick={() => setIsContactModalOpen(true)} />
 
             {/* Row 4 | Col 1–5: Featured Projects Header */}
             <FeaturedProjectsCard onClick={() => setIsAllProjectsOpen(true)} />
@@ -373,6 +375,7 @@ export default function Home() {
             openProject={openProject}
             openDetails={openDetails}
             onViewAllProjects={() => setIsAllProjectsOpen(true)}
+            onEmailClick={() => setIsContactModalOpen(true)}
           />
         </div>
 
@@ -394,6 +397,10 @@ export default function Home() {
         onClose={() => setIsAllProjectsOpen(false)}
         projects={PROJECTS}
         onProjectSelect={openProject}
+      />
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
       />
     </div>
   );

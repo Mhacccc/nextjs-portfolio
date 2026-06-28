@@ -56,17 +56,41 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
   if (!isVisible && !isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !message) return;
     setStatus("sending");
-    // Simulate API call
-    setTimeout(() => {
-      setStatus("success");
-      setName("");
-      setEmail("");
-      setMessage("");
-    }, 2000);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "26b6b315-5592-426c-8023-2ad9459882f2",
+          name: name,
+          email: email,
+          message: message,
+          subject: `New Portfolio Message from ${name}`,
+          from_name: "Portfolio Contact Form",
+        }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setStatus("success");
+        setName("");
+        setEmail("");
+        setMessage("");
+      } else {
+        setStatus("error");
+      }
+    } catch (error) {
+      console.error("Web3Forms transmission error:", error);
+      setStatus("error");
+    }
   };
 
   const handleReset = () => {
@@ -103,10 +127,8 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
           isAnimatingOut ? "modal-exit" : "modal-enter"
         }`}
         style={{
-          background: "rgba(10, 13, 22, 0.93)",
+          background: "rgba(10, 13, 22, 0.975)",
           borderColor: "rgba(255,255,255,0.10)",
-          backdropFilter: "blur(40px) saturate(180%)",
-          WebkitBackdropFilter: "blur(40px) saturate(180%)",
           boxShadow: "0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05) inset",
           color: "var(--text-primary)",
         }}
@@ -137,7 +159,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
             <div className="space-y-1.5">
               <h3 className="text-xl font-bold text-(--text-primary)">Message Transmitted</h3>
               <p className="text-sm text-(--text-muted) max-w-[280px] leading-relaxed">
-                Thank you for reaching out! Alex will respond within 24 hours.
+                Thank you for reaching out! Mark will respond within 24 hours.
               </p>
             </div>
             <button
@@ -228,10 +250,16 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   disabled={status === "sending"}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Tell me about your project..."
+                  placeholder="Send message..."
                   className={`${inputClass} resize-none`}
                 />
               </div>
+
+              {status === "error" && (
+                <p className="text-xs text-rose-500 font-semibold text-center mt-1">
+                  Failed to send message. Please try again or email directly.
+                </p>
+              )}
 
               <button
                 type="submit"

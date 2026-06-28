@@ -1,13 +1,17 @@
 import { Mail, ArrowUpRight } from "lucide-react";
 import { FaGithub, FaLinkedin, FaFacebook, FaPhone } from "react-icons/fa";
 
-export function ContactCard() {
+interface ContactCardProps {
+  onEmailClick: () => void;
+}
+
+export function ContactCard({ onEmailClick }: ContactCardProps) {
   return (
     <section
       className="card p-2"
       style={{ gridColumn: "10 / 13", gridRow: "3 / 6" }}
     >
-      <div className="inner-card p-6 flex flex-col gap-10 h-full relative overflow-hidden">
+      <div className="inner-card p-6 flex flex-col gap-8 h-full relative overflow-hidden">
         {/* Decorative subtle background gradient leak */}
         <div className="absolute -bottom-12 -right-12 w-36 h-36 rounded-full bg-blue-500/5 blur-2xl pointer-events-none" />
 
@@ -17,7 +21,7 @@ export function ContactCard() {
             <span className="accent">something together.</span>
           </h2>
           <p className="text-[12px] text-(--text-muted) leading-relaxed font-medium">
-            Currently open to architectural consultations and high-impact engineering roles.
+            Currently open to full-time opportunities, internships, and entry-level developer roles.
           </p>
         </div>
 
@@ -64,9 +68,9 @@ export function ContactCard() {
             <ArrowUpRight className="w-3 h-3 text-(--text-muted) opacity-0 group-hover:opacity-100 transition-opacity" />
           </a>
 
-          <a
-            href="mailto:marklouie.balaba14@gmail.com"
-            className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-white border border-white/15 transition-all duration-200 group mt-1 cursor-pointer hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+          <button
+            onClick={onEmailClick}
+            className="flex items-center justify-center gap-2 px-4 py-3 rounded-2xl text-white border border-white/15 transition-all duration-200 group mt-1 cursor-pointer hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500/50 w-full"
             style={{
               background: "var(--accent-gradient)",
               boxShadow: "0 4px 16px rgba(34, 211, 238, 0.2)",
@@ -74,7 +78,7 @@ export function ContactCard() {
           >
             <Mail className="w-3.5 h-3.5 text-white" />
             <span className="text-[12px] text-white font-bold">Send an Email</span>
-          </a>
+          </button>
         </div>
       </div>
     </section>
